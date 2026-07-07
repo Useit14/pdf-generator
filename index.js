@@ -14,7 +14,9 @@ app.post("/generate-pdf", async (req, res) => {
 
     console.log("PDF generation request received");
 
+    // Используем google-chrome-stable вместо встроенного Chromium
     const browser = await puppeteer.launch({
+      executablePath: "google-chrome-stable",
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",
