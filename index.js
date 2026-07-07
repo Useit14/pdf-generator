@@ -15,10 +15,19 @@ app.post("/generate-pdf", async (req, res) => {
 
     console.log("PDF generation request received");
 
+    const executablePath = await chromium.executablePath();
+
     const browser = await puppeteer.launch({
-      args: chromium.args,
+      args: [
+        ...chromium.args,
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-gpu",
+        "--single-process",
+      ],
       defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath(),
+      executablePath: executablePath,
       headless: true,
       ignoreDefaultArgs: ["--disable-extensions"],
     });
