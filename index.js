@@ -1,6 +1,6 @@
 const express = require("express");
 const puppeteer = require("puppeteer-core");
-const chromium = require("chrome-aws-lambda");
+const chromium = require("@sparticuz/chromium");
 const app = express();
 
 app.use(express.json({ limit: "10mb" }));
@@ -15,6 +15,8 @@ app.post("/generate-pdf", async (req, res) => {
 
     console.log("PDF generation request received");
 
+    const executablePath = await chromium.executablePath();
+
     const browser = await puppeteer.launch({
       args: [
         ...chromium.args,
@@ -22,9 +24,10 @@ app.post("/generate-pdf", async (req, res) => {
         "--disable-setuid-sandbox",
         "--disable-dev-shm-usage",
         "--single-process",
+        "--disable-gpu",
       ],
       defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath,
+      executablePath: executablePath,
       headless: true,
       ignoreDefaultArgs: ["--disable-extensions"],
     });
