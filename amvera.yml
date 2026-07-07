@@ -4,6 +4,9 @@ meta:
     name: npm
     version: 20
 
+build:
+  additionalCommands: npm run postinstall
+
 run:
   scriptName: index.js
   containerPort: 3000

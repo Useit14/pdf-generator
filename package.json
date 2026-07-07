@@ -1,10 +1,11 @@
 {
   "name": "pdf-generator",
   "version": "1.0.0",
-  "description": "PDF generation service using Puppeteer",
+  "description": "PDF generation service using Puppeteer and Chromium",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "postinstall": "npx puppeteer browsers install chrome"
   },
   "dependencies": {
     "express": "^5.2.1",

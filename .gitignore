@@ -1,0 +1,38 @@
+# Зависимости, устанавливаемые через npm install (не нужны в репо)
+node_modules/
+
+# Логи и временные файлы
+logs/
+*.log
+npm-debug.log*
+
+# Сгенерированные PDF
+*.pdf
+tmp/
+temp/
+*.tmp
+
+# Конфиденциальные данные
+.env
+.env.local
+.env.*.local
+
+# Операционные файлы
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Файлы отладки Puppeteer/Chromium
+.cache/
+.chromium/
+.puppeteer/
+
+# GPG/PGP ключи
+*.gpg
+*.asc
+
+# Прочее
+.cache/
+*.swp
+*.swo

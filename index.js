@@ -1,5 +1,6 @@
 const express = require("express");
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-core");
+const chromium = require("@sparticuz/chromium");
 const app = express();
 
 app.use(express.json({ limit: "10mb" }));
@@ -9,14 +10,19 @@ app.post("/generate-pdf", async (req, res) => {
     const { html, options = {} } = req.body;
 
     if (!html) {
-      return res.status(400).json({ error: 'Поле "html" обязательно' });
+      return res.status(400).json({ error: 'Field "html" is required' });
     }
 
     console.log("PDF generation request received");
 
     const browser = await puppeteer.launch({
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      headless: "new",
+      args: [...chromium.args, "--no-sandbox", "--disable-setuid-sandbox"],
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(
+        process.env.CHROME_PATH || undefined,
+      ),
+      headless: true,
+      ignoreDefaultArgs: ["--disable-extensions"],
     });
 
     const page = await browser.newPage();
